@@ -1,0 +1,41 @@
+{
+    "name": "zorachka/container",
+    "description": "Zorachka Container",
+    "keywords": [
+        "zorachka",
+        "container",
+        "di"
+    ],
+    "homepage": "https://github.com/zorachka/container",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Siarhei Bautrukevich",
+            "email": "hello@bautrukevich.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "php-di/php-di": "^6.3"
+    },
+    "require-dev": {
+        "pestphp/pest": "^1.21",
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zorachka\\Framework\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zorachka\\Framework\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
