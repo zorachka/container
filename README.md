@@ -10,7 +10,7 @@ This package provides a factory for [PSR-11](http://www.php-fig.org/psr/psr-11/)
 [dependency injection](http://en.wikipedia.org/wiki/Dependency_injection) container that is able to instantiate
 and configure classes resolving dependencies and `ServiceProvider` interface.
 
-Uses [PHP-DI](php-di.org/) as a core.
+Uses [PHP-DI](https://php-di.org/) as a core.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/zorachka/container.svg?style=flat-square)](https://packagist.org/packages/zorachka/container)
 [![Tests](https://github.com/zorachka/container/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/zorachka/container/actions/workflows/run-tests.yml)
