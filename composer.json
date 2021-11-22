@@ -18,7 +18,8 @@
     "require": {
         "php": "^8.0",
         "php-di/php-di": "^6.3",
-        "webmozart/assert": "^1.10"
+        "webmozart/assert": "^1.10",
+        "ext-apcu": "*"
     },
     "require-dev": {
         "pestphp/pest": "^1.21",

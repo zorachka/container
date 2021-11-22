@@ -35,7 +35,9 @@ final class ContainerFactory
         $builder->useAnnotations(false);
 
         if ($this->compilationPath !== '') {
-            $builder->enableDefinitionCache();
+            if (\apcu_enabled()) {
+                $builder->enableDefinitionCache();
+            }
             $builder->enableCompilation($this->compilationPath);
             $builder->ignorePhpDocErrors(true);
         }

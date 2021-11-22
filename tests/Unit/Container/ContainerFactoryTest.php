@@ -55,3 +55,23 @@ test('ServiceProvider can extend definitions', function () {
     expect($container)->toBeInstanceOf(ContainerInterface::class);
     expect($stdClass->property)->toBe('value');
 });
+
+test('ContainerFactory should not cache container if compilation path doesn\'t exists', function () {
+    $container = (new ContainerFactory())->build([
+        SimpleServiceProvider::class,
+    ]);
+
+    expect($container)->toBeInstanceOf(ContainerInterface::class);
+    expect(file_exists( __DIR__ . '/CompiledContainer.php'))->toBeFalse();
+});
+
+test('ContainerFactory should cache container if compilation path exists', function () {
+    $container = (new ContainerFactory(__DIR__))->build([
+        SimpleServiceProvider::class,
+    ]);
+
+    $file = __DIR__ . '/CompiledContainer.php';
+    expect($container)->toBeInstanceOf(ContainerInterface::class);
+    expect(file_exists($file))->toBeTrue();
+    unlink($file);
+});
