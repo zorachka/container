@@ -11,35 +11,35 @@ use Zorachka\Framework\Tests\Datasets\ExtensionsIsNotCallableServiceProvider;
 use Zorachka\Framework\Tests\Datasets\SimpleServiceProvider;
 
 test('ContainerFactory should throw exception if array of providers is empty', function () {
-    ContainerFactory::build([]);
+    (new ContainerFactory())->build([]);
 })->throws(InvalidArgumentException::class);
 
 test('ContainerFactory should throw exception if provider class name is not ServiceProvider', function () {
-    ContainerFactory::build([
+    (new ContainerFactory())->build([
         stdClass::class,
     ]);
 })->throws(InvalidArgumentException::class);
 
 test('ContainerFactory should throw exception if definitions and extensions was not provided', function () {
-    ContainerFactory::build([
+    (new ContainerFactory())->build([
         EmptyServiceProvider::class,
     ]);
 })->throws(InvalidArgumentException::class);
 
 test('ContainerFactory should throw exception if definitions is not callable', function () {
-    ContainerFactory::build([
+    (new ContainerFactory())->build([
         DefinitionsIsNotCallableServiceProvider::class,
     ]);
 })->throws(InvalidArgumentException::class);
 
 test('ContainerFactory should throw exception if extensions is not callable', function () {
-    ContainerFactory::build([
+    (new ContainerFactory())->build([
         ExtensionsIsNotCallableServiceProvider::class,
     ]);
 })->throws(InvalidArgumentException::class);
 
 test('ContainerFactory should create Psr\Container\ContainerInterface from array of ServiceProvider', function () {
-    $container = ContainerFactory::build([
+    $container = (new ContainerFactory())->build([
         SimpleServiceProvider::class,
     ]);
 
@@ -47,7 +47,7 @@ test('ContainerFactory should create Psr\Container\ContainerInterface from array
 });
 
 test('ServiceProvider can extend definitions', function () {
-    $container = ContainerFactory::build([
+    $container = (new ContainerFactory())->build([
         CanExtendDefinitionsServiceProvider::class,
     ]);
 
