@@ -8,6 +8,7 @@ use Exception;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use DI\ContainerBuilder;
+use Psr\Http\Server\RequestHandlerInterface;
 use Webmozart\Assert\Assert;
 use function DI\decorate;
 
@@ -26,13 +27,20 @@ final class ContainerFactory
     public static function build(array $providers): ContainerInterface
     {
         Assert::notEmpty($providers, 'Please, specify at least one service provider');
-        Assert::allImplementsInterface($providers, ServiceProvider::class, 'Must implement Zorachka\Framework\Container\ServiceProvider interface');
 
         $builder = new ContainerBuilder();
         $builder->useAnnotations(false);
 
         /** @var class-string<ServiceProvider> $providerClassName */
         foreach ($providers as $providerClassName) {
+            if (!is_a($providerClassName, ServiceProvider::class, true)) {
+                throw new InvalidArgumentException(sprintf(
+                    'Class "%s" was expected to implement "%s"',
+                    $providerClassName,
+                    ServiceProvider::class
+                ));
+            }
+
             $definitions = $providerClassName::getDefinitions();
             $extensions = $providerClassName::getExtensions();
 

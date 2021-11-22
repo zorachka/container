@@ -4,103 +4,43 @@ declare(strict_types=1);
 
 use Psr\Container\ContainerInterface;
 use Zorachka\Framework\Container\ContainerFactory;
-use Zorachka\Framework\Container\ServiceProvider;
+use Zorachka\Framework\Tests\Datasets\CanExtendDefinitionsServiceProvider;
+use Zorachka\Framework\Tests\Datasets\DefinitionsIsNotCallableServiceProvider;
+use Zorachka\Framework\Tests\Datasets\EmptyServiceProvider;
+use Zorachka\Framework\Tests\Datasets\ExtensionsIsNotCallableServiceProvider;
+use Zorachka\Framework\Tests\Datasets\SimpleServiceProvider;
 
 test('ContainerFactory should throw exception if array of providers is empty', function () {
     ContainerFactory::build([]);
 })->throws(InvalidArgumentException::class);
 
+test('ContainerFactory should throw exception if provider class name is not ServiceProvider', function () {
+    ContainerFactory::build([
+        stdClass::class,
+    ]);
+})->throws(InvalidArgumentException::class);
+
 test('ContainerFactory should throw exception if definitions and extensions was not provided', function () {
     ContainerFactory::build([
-        new class implements ServiceProvider {
-            /**
-             * @inheritDoc
-             */
-            public static function getDefinitions(): array
-            {
-                return [];
-            }
-
-            /**
-             * @inheritDoc
-             */
-            public static function getExtensions(): array
-            {
-                return [];
-            }
-        }
+        EmptyServiceProvider::class,
     ]);
 })->throws(InvalidArgumentException::class);
 
 test('ContainerFactory should throw exception if definitions is not callable', function () {
     ContainerFactory::build([
-        new class implements ServiceProvider {
-            /**
-             * @inheritDoc
-             */
-            public static function getDefinitions(): array
-            {
-                return [
-                    stdClass::class => new stdClass()
-                ];
-            }
-
-            /**
-             * @inheritDoc
-             */
-            public static function getExtensions(): array
-            {
-                return [];
-            }
-        }
+        DefinitionsIsNotCallableServiceProvider::class,
     ]);
 })->throws(InvalidArgumentException::class);
 
 test('ContainerFactory should throw exception if extensions is not callable', function () {
     ContainerFactory::build([
-        new class implements ServiceProvider {
-            /**
-             * @inheritDoc
-             */
-            public static function getDefinitions(): array
-            {
-                return [];
-            }
-
-            /**
-             * @inheritDoc
-             */
-            public static function getExtensions(): array
-            {
-                return [
-                    stdClass::class => new stdClass()
-                ];
-            }
-        }
+        ExtensionsIsNotCallableServiceProvider::class,
     ]);
 })->throws(InvalidArgumentException::class);
 
 test('ContainerFactory should create Psr\Container\ContainerInterface from array of ServiceProvider', function () {
     $container = ContainerFactory::build([
-        new class implements ServiceProvider {
-            /**
-             * @inheritDoc
-             */
-            public static function getDefinitions(): array
-            {
-                return [
-                    stdClass::class => fn() => new stdClass(),
-                ];
-            }
-
-            /**
-             * @inheritDoc
-             */
-            public static function getExtensions(): array
-            {
-                return [];
-            }
-        }
+        SimpleServiceProvider::class,
     ]);
 
     expect($container)->toBeInstanceOf(ContainerInterface::class);
@@ -108,31 +48,7 @@ test('ContainerFactory should create Psr\Container\ContainerInterface from array
 
 test('ServiceProvider can extend definitions', function () {
     $container = ContainerFactory::build([
-        new class implements ServiceProvider {
-            /**
-             * @inheritDoc
-             */
-            public static function getDefinitions(): array
-            {
-                return [
-                    stdClass::class => fn() => new stdClass(),
-                ];
-            }
-
-            /**
-             * @inheritDoc
-             */
-            public static function getExtensions(): array
-            {
-                return [
-                    stdClass::class => function ($stdClass, ContainerInterface $container): stdClass {
-                        $stdClass->property = 'value';
-
-                        return $stdClass;
-                    }
-                ];
-            }
-        }
+        CanExtendDefinitionsServiceProvider::class,
     ]);
 
     $stdClass = $container->get(stdClass::class);
