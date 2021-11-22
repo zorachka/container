@@ -31,20 +31,20 @@ final class ContainerFactory
         $builder = new ContainerBuilder();
         $builder->useAnnotations(false);
 
-        /** @var class-string<ServiceProvider> $provider */
-        foreach ($providers as $provider) {
-            $definitions = $provider::getDefinitions();
-            $extensions = $provider::getExtensions();
+        /** @var class-string<ServiceProvider> $providerClassName */
+        foreach ($providers as $providerClassName) {
+            $definitions = $providerClassName::getDefinitions();
+            $extensions = $providerClassName::getExtensions();
 
             if (empty($definitions) && empty($extensions)) {
                 throw new InvalidArgumentException(
-                    \sprintf('Please, specify definitions or extensions in %s', $provider::class)
+                    \sprintf('Please, specify definitions or extensions in %s', $providerClassName)
                 );
             }
 
             Assert::allIsCallable(
                 \array_values($definitions),
-                \sprintf('All definitions of %s must be `callable`', $provider::class)
+                \sprintf('All definitions of %s must be `callable`', $providerClassName)
             );
 
             $builder->addDefinitions($definitions);
