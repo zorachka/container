@@ -8,7 +8,6 @@ use Exception;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use DI\ContainerBuilder;
-use Psr\Http\Server\RequestHandlerInterface;
 use Webmozart\Assert\Assert;
 use function DI\decorate;
 
