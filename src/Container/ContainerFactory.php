@@ -8,6 +8,7 @@ use Exception;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use DI\ContainerBuilder;
+use Psr\Http\Server\RequestHandlerInterface;
 use Webmozart\Assert\Assert;
 use function DI\decorate;
 
@@ -26,25 +27,32 @@ final class ContainerFactory
     public static function build(array $providers): ContainerInterface
     {
         Assert::notEmpty($providers, 'Please, specify at least one service provider');
-        Assert::allImplementsInterface($providers, ServiceProvider::class, 'Must implement Zorachka\Framework\Container\ServiceProvider interface');
 
         $builder = new ContainerBuilder();
         $builder->useAnnotations(false);
 
-        /** @var class-string<ServiceProvider> $provider */
-        foreach ($providers as $provider) {
-            $definitions = $provider::getDefinitions();
-            $extensions = $provider::getExtensions();
+        /** @var class-string<ServiceProvider> $providerClassName */
+        foreach ($providers as $providerClassName) {
+            if (!is_a($providerClassName, ServiceProvider::class, true)) {
+                throw new InvalidArgumentException(sprintf(
+                    'Class "%s" was expected to implement "%s"',
+                    $providerClassName,
+                    ServiceProvider::class
+                ));
+            }
+
+            $definitions = $providerClassName::getDefinitions();
+            $extensions = $providerClassName::getExtensions();
 
             if (empty($definitions) && empty($extensions)) {
                 throw new InvalidArgumentException(
-                    \sprintf('Please, specify definitions or extensions in %s', $provider::class)
+                    \sprintf('Please, specify definitions or extensions in %s', $providerClassName)
                 );
             }
 
             Assert::allIsCallable(
                 \array_values($definitions),
-                \sprintf('All definitions of %s must be `callable`', $provider::class)
+                \sprintf('All definitions of %s must be `callable`', $providerClassName)
             );
 
             $builder->addDefinitions($definitions);
