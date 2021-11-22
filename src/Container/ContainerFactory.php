@@ -13,8 +13,12 @@ use function DI\decorate;
 
 final class ContainerFactory
 {
-    private function __construct()
-    {
+    private string $compilationPath;
+
+    public function __construct(
+        string $compilationPath = '',
+    ) {
+        $this->compilationPath = $compilationPath;
     }
 
     /**
@@ -23,12 +27,18 @@ final class ContainerFactory
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    public static function build(array $providers): ContainerInterface
+    public function build(array $providers): ContainerInterface
     {
         Assert::notEmpty($providers, 'Please, specify at least one service provider');
 
         $builder = new ContainerBuilder();
         $builder->useAnnotations(false);
+
+        if ($this->compilationPath !== '') {
+            $builder->enableDefinitionCache();
+            $builder->enableCompilation($this->compilationPath);
+            $builder->ignorePhpDocErrors(true);
+        }
 
         /** @var class-string<ServiceProvider> $providerClassName */
         foreach ($providers as $providerClassName) {
