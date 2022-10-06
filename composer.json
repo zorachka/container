@@ -17,27 +17,38 @@
     ],
     "require": {
         "php": "^8.0",
-        "php-di/php-di": "^6.3",
-        "webmozart/assert": "^1.10",
+        "php-di/php-di": "^6.4",
+        "webmozart/assert": "^1.11",
         "ext-apcu": "*"
     },
     "require-dev": {
-        "pestphp/pest": "^1.21",
-        "roave/security-advisories": "dev-latest"
+        "friendsofphp/php-cs-fixer": "^3.11",
+        "phpunit/phpunit": "^9.5",
+        "psalm/plugin-phpunit": "^0.17.0",
+        "roave/security-advisories": "dev-latest",
+        "vimeo/psalm": "^4.27"
     },
     "autoload": {
         "psr-4": {
-            "Zorachka\\Framework\\": "src/"
+            "Zorachka\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Zorachka\\Framework\\Tests\\": "tests"
+            "Zorachka\\Container\\Tests\\": "tests"
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": false
+        }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "scripts": {
+        "php-cs-fixer": "php-cs-fixer --config=.php-cs-fixer.php --allow-risky=yes",
+        "psalm": "psalm --config=psalm.xml",
+        "test": "phpunit --colors=always"
+    }
 }
