@@ -30,7 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Zorachka\\": "src/"
+            "Zorachka\\Container\\": "src"
         }
     },
     "autoload-dev": {
