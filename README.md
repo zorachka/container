@@ -33,7 +33,7 @@ To create a container you need to pass array of `ServiceProvider` objects interf
 declare(strict_types=1);
 
 use Psr\Container\ContainerInterface;
-use Zorachka\Framework\Container\ContainerFactory;
+use Zorachka\Container\ContainerFactory;
 
 $container = ContainerFactory::build([
     new class implements ServiceProvider {
@@ -43,7 +43,7 @@ $container = ContainerFactory::build([
         public static function getDefinitions(): array
         {
             return [
-                stdClass::class => fn() => new stdClass(),
+                stdClass::class => static fn() => new stdClass(),
             ];
         }
 
