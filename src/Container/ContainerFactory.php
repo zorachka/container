@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Zorachka\Framework\Container;
+namespace Zorachka\Container;
 
+use DI\ContainerBuilder;
 use Exception;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
-use DI\ContainerBuilder;
 use Webmozart\Assert\Assert;
+
 use function DI\decorate;
 
 final class ContainerFactory
@@ -23,7 +24,6 @@ final class ContainerFactory
 
     /**
      * @param class-string<ServiceProvider>[] $providers
-     * @return ContainerInterface
      * @throws Exception
      * @throws InvalidArgumentException
      */
@@ -42,7 +42,6 @@ final class ContainerFactory
             $builder->ignorePhpDocErrors(true);
         }
 
-        /** @var class-string<ServiceProvider> $providerClassName */
         foreach ($providers as $providerClassName) {
             if (!is_a($providerClassName, ServiceProvider::class, true)) {
                 throw new InvalidArgumentException(sprintf(
@@ -74,6 +73,7 @@ final class ContainerFactory
 
             $decorated = [];
             foreach ($extensions as $extensionClassName => $callable) {
+                /** @psalm-suppress RedundantConditionGivenDocblockType */
                 Assert::isCallable($callable, \sprintf('Extension of %s must be `callable`', $extensionClassName));
 
                 $decorated[$extensionClassName] = decorate($callable);
