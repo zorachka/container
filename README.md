@@ -13,7 +13,8 @@ and configure classes resolving dependencies and `ServiceProvider` interface.
 Uses [PHP-DI](https://php-di.org/) as a core.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/zorachka/container.svg?style=flat-square)](https://packagist.org/packages/zorachka/container)
-[![Tests](https://github.com/zorachka/container/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/zorachka/container/actions/workflows/run-tests.yml)
+[![Tests](https://github.com/zorachka/container/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/zorachka/container/actions/workflows/run-tests.yml)
+[![Analysis](https://github.com/zorachka/container/actions/workflows/analyze.yml/badge.svg?branch=main)](https://github.com/zorachka/container/actions/workflows/run-tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/zorachka/container.svg?style=flat-square)](https://packagist.org/packages/zorachka/container)
 ## Installation
 
