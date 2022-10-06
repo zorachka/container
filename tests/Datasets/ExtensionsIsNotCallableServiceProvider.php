@@ -2,25 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Zorachka\Framework\Tests\Datasets;
+namespace Zorachka\Container\Tests\Datasets;
 
 use stdClass;
-use Zorachka\Framework\Container\ServiceProvider;
+use Zorachka\Container\ServiceProvider;
 
 final class ExtensionsIsNotCallableServiceProvider implements ServiceProvider
 {
-    /**
-     * @inheritDoc
-     */
+    /** @psalm-suppress InvalidArgument, InvalidReturnType, InvalidReturnStatement */
     public static function getDefinitions(): array
     {
         return [
-            stdClass::class => new stdClass()
+            stdClass::class => new stdClass(),
         ];
     }
 
     /**
-     * @inheritDoc
+     *
      */
     public static function getExtensions(): array
     {

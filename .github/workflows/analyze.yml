@@ -1,0 +1,29 @@
+on:
+  pull_request:
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - '.gitignore'
+      - '.gitattributes'
+      - 'psalm.xml'
+
+  push:
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - '.gitignore'
+      - '.gitattributes'
+      - 'psalm.xml'
+
+name: static analysis
+
+jobs:
+  psalm:
+    uses: zorachka/actions/.github/workflows/psalm.yml@main
+    with:
+      os: >-
+        ['ubuntu-latest']
+      php: >-
+        ['8.0', '8.1']

@@ -2,23 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Zorachka\Framework\Tests\Datasets;
+namespace Zorachka\Container\Tests\Datasets;
 
-use Zorachka\Framework\Container\ServiceProvider;
+use Zorachka\Container\ServiceProvider;
 
 final class EmptyServiceProvider implements ServiceProvider
 {
-    /**
-     * @inheritDoc
-     */
     public static function getDefinitions(): array
     {
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
     public static function getExtensions(): array
     {
         return [];

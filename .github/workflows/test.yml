@@ -1,0 +1,33 @@
+on:
+  pull_request:
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - '.gitignore'
+      - '.gitattributes'
+      - 'psalm.xml'
+
+  push:
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - '.gitignore'
+      - '.gitattributes'
+      - 'psalm.xml'
+
+name: test
+
+jobs:
+  phpunit:
+    uses: zorachka/actions/.github/workflows/phpunit.yml@main
+    with:
+      # coverage: pcov / coverage: xdebug / coverage: xdebug2 / coverage: none
+      extensions: apcu
+      # ini-values: date.timezone='UTC'
+      os: >-
+        ['ubuntu-latest', 'windows-latest']
+      php: >-
+        ['8.0', '8.1']
+      tools: composer:v2
