@@ -35,6 +35,7 @@ declare(strict_types=1);
 
 use Psr\Container\ContainerInterface;
 use Zorachka\Container\ContainerFactory;
+use Zorachka\Container\ServiceProvider;
 
 $container = ContainerFactory::build([
     new class implements ServiceProvider {
@@ -54,7 +55,7 @@ $container = ContainerFactory::build([
         public static function getExtensions(): array
         {
             return [
-                stdClass::class => function ($stdClass, ContainerInterface $container): stdClass {
+                stdClass::class => static function ($stdClass, ContainerInterface $container): stdClass {
                     $stdClass->property = 'value';
 
                     return $stdClass;
