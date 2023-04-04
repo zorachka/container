@@ -9,7 +9,6 @@ use Zorachka\Container\ServiceProvider;
 
 final class ExtensionsIsNotCallableServiceProvider implements ServiceProvider
 {
-    /** @psalm-suppress InvalidArgument, InvalidReturnType, InvalidReturnStatement */
     public static function getDefinitions(): array
     {
         return [

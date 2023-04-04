@@ -20,7 +20,6 @@ final class CanExtendDefinitionsServiceProvider implements ServiceProvider
     {
         return [
             stdClass::class => static function (stdClass $stdClass): object {
-                /** @psalm-suppress MixedPropertyAssignment */
                 $stdClass->property = 'value';
 
                 return $stdClass;
