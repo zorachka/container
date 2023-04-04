@@ -36,7 +36,7 @@ final class ContainerFactoryTest extends TestCase
     public function shouldThrowExceptionIfDefinitionsIsNotServiceProvider(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        /** @psalm-suppress InvalidArgument */
+        /* @phpstan-ignore-next-line */
         (new ContainerFactory())->build([
             stdClass::class,
         ]);

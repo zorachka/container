@@ -3,3 +3,6 @@ parameters:
 	paths:
 		- src
 		- tests
+	ignoreErrors:
+		- '#^Method Zorachka\\Container\\Tests\\Datasets\\DefinitionsIsNotCallableServiceProvider\:\:getDefinitions\(\) should return array\<string, callable\(\)\: mixed\> but returns array\{stdClass\: stdClass\}\.$#'
+		- '#^Method Zorachka\\Container\\Tests\\Datasets\\ExtensionsIsNotCallableServiceProvider\:\:getDefinitions\(\) should return array\<string, callable\(\)\: mixed\> but returns array\{stdClass\: stdClass\}\.$#'
