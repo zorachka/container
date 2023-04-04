@@ -16,6 +16,8 @@ on:
       - '.gitignore'
       - '.gitattributes'
       - 'phpunit.xml'
+    branches:
+      - main
 
 name: test
 
