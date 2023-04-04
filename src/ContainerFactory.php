@@ -32,14 +32,13 @@ final class ContainerFactory
         Assert::notEmpty($providers, 'Please, specify at least one service provider');
 
         $builder = new ContainerBuilder();
-        $builder->useAnnotations(false);
+        $builder->useAttributes(false);
 
         if ($this->compilationPath !== '') {
             if (\apcu_enabled()) {
                 $builder->enableDefinitionCache();
             }
             $builder->enableCompilation($this->compilationPath);
-            $builder->ignorePhpDocErrors(true);
         }
 
         foreach ($providers as $providerClassName) {

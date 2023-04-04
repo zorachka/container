@@ -1,6 +1,6 @@
-start: docker-down-clear docker-pull docker-build-pull docker-up composer-install
+start: docker-down-clear docker-pull docker-build-pull docker-up app-init
 stop: docker-down-clear
-check: lint analyze test
+check: cs-lint analyse test
 
 docker-up:
 	docker compose up -d
@@ -14,20 +14,25 @@ docker-pull:
 docker-build-pull:
 	docker compose build --pull
 
+app-init: composer-install
+
 composer-install:
 	docker compose run --rm php-cli composer install
 
-composer-dump:
-	docker compose run --rm php-cli composer dump-autoload
+composer-update:
+	docker compose run --rm php-cli composer update
 
-lint:
-	docker compose run --rm php-cli composer php-cs-fixer fix -- --dry-run --diff
+composer-require:
+	docker compose run --rm php-cli composer require $(p)
+
+cs-lint:
+	docker compose run --rm php-cli composer cs-lint
 
 cs-fix:
-	docker compose run --rm php-cli composer php-cs-fixer fix
+	docker compose run --rm php-cli composer cs-fix
 
-analyze:
-	docker compose run --rm php-cli composer psalm
+analyse:
+	docker compose run --rm php-cli composer analyse
 
 test:
 	docker compose run --rm php-cli composer test
